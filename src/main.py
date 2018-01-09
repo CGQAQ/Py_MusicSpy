@@ -74,7 +74,7 @@ class MusicSpy:
                 continue
         
         end_time = time.time()
-        print('All download task has been accomplished')
+        print('Congrats! All download tasks have been accomplished ^_^')
         print('Total task count: ' + str(cls.task_count) + ', ' + str(cls.fail_count) + ' failed!')
         print('Total time cost: ' + str(math.floor(end_time - start_time)) + 's') 
 
