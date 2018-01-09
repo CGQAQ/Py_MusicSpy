@@ -1,9 +1,12 @@
 # - coding: utf-8 -
+
+# Author CG
+# !!!　This script depends on requests lib, PLEASE INSTALL IT THROUGH PIP FIRST  !!!
 import time
 import os
 import json
-import requests
 import math
+import requests
 
 
 class MusicSpy:
@@ -13,6 +16,8 @@ class MusicSpy:
                'x-requested-with': 'XMLHttpRequest'}
     services = ['netease', 'qq', 'kugou', 'kuwo', 'xiami', 'baidu', '1ting', 'migu', 'lizhi', 'qingting', 'ximalaya',
                 'kg', '5singyc', '5singfc', 'soundcloud']
+    task_count = 0
+    fail_count = 0
 
     @classmethod
     def __init__(cls, names, pic=False, lrc=False):
@@ -25,6 +30,8 @@ class MusicSpy:
 
     @classmethod
     def run(cls):
+        start_time = time.time()
+
         if cls.names is None or not type(cls.names) is list:
             raise Exception('Names array is needed!')
 
@@ -49,15 +56,17 @@ class MusicSpy:
                     else:
                         break
 
-                start_time = time.time()
                 service = cls.services[choose]
                 for name in cls.names:
                     cls.fastmode(name, service)
-                end_time = time.time()
-                print('All download completed, total time: ' + str(math.floor(end_time - start_time)) + 's')
                 break
             else:
                 continue
+        
+        end_time = time.time()
+        print('All download task has been accomplished')
+        print('Total task count: ' + str(cls.task_count) + ', ' + str(cls.fail_count) + ' failed!')
+        print('Total time cost: ' + str(math.floor(end_time - start_time))) 
 
     @classmethod
     def search(cls, name):
@@ -141,20 +150,39 @@ class MusicSpy:
 
     @classmethod
     def download(cls, data):
-        fullpath = './Music/' + data['author'] + ' - ' + data['title'] + '.' + data['url'].split('.')[-1].split('?')[0]
+        author = data['author']
+        title = data['title']
+        print(author + ' - ' + title + ' start downloading...')
+        cls.task_count += 1
+        start_time = time.time()
+        fullpath = './Music/' + author + ' - ' + title + '.' + data['url'].split('.')[-1].split('?')[0]
+        picfullpath = './Music/' + author + ' - ' + title + '.' + data['pic'].split('.')[-1].split('?')[0]
+        lrcfullpath = './Music/' + author + ' - ' + title + '.lrc'
         if not os.path.exists('./Music'):
             os.mkdir('./Music')
         if os.path.exists(fullpath):
             return
-        response = requests.get(data['url'])
-        with open(fullpath,
-                  'wb') as f:
-            f.write(response.content)
+        try:
+            response = requests.get(data['url'])
+            with open(fullpath, 'wb') as f:
+                f.write(response.content)
+            if cls.pic is True:
+                response = requests.get(data['pic'])
+                with open(picfullpath, 'wb') as f:
+                    f.write(response.content)
+            if cls.lrc is True:
+                with open(lrcfullpath, 'w') as f:
+                    f.write(data['lrc'])
+        except:
+            print(author + ' - ' + title + ' download failed!')
+            cls.fail_count += 1
+        end_time = time.time()
+        print(author + ' - ' + title + '  downloaded... spent time: ' + str(math.floor(end_time - start_time)))
+
 
 
 def main():
     ms = MusicSpy(['ho ho ho', 'hello'])
-
     ms.run()
 
 
