@@ -74,6 +74,7 @@ class MusicSpy:
                 continue
         
         end_time = time.time()
+        print('-------------------------------------------------------')
         print('Congrats! All download tasks have been accomplished ^_^')
         print('Total task count: ' + str(cls.task_count) + ', ' + str(cls.fail_count) + ' failed!')
         print('Total time cost: ' + str(math.floor(end_time - start_time)) + 's') 
@@ -162,6 +163,7 @@ class MusicSpy:
     def download(cls, data):
         author = data['author']
         title = data['title']
+        print('-------------------------------------------------------')
         print(author + ' - ' + title + ' start downloading...')
         cls.task_count += 1
         start_time = time.time()
@@ -193,7 +195,7 @@ class MusicSpy:
 
 
 def main():
-    ms = MusicSpy(['ho ho ho', 'hello'])
+    ms = MusicSpy(['ho ho ho', 'hello'], True, True)
     ms.run()
 
 
