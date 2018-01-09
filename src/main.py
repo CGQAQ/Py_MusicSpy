@@ -49,14 +49,24 @@ class MusicSpy:
                 for service in cls.services:
                     print(str(index) + '. ' + service)
                     index += 1
+                #### choose service part ######
+                service = None
                 while True:
-                    choose = int(input('input index to choose service: '))
-                    if choose != 1 and choose != 2:
+                    print('-----------------------------------------')
+                    idx = 0
+                    for service in cls.services:
+                        print(str(idx) + '. ' + service)
+                        idx += 1
+                    try:
+                        service = int(input('Input index to choose service: '))
+                    except:
+                        continue
+                    if service >= len(cls.services) or service < 0:
                         continue
                     else:
+                        service = cls.services[service]
                         break
-
-                service = cls.services[choose]
+                #### choose service part ######
                 for name in cls.names:
                     cls.fastmode(name, service)
                 break
@@ -66,7 +76,7 @@ class MusicSpy:
         end_time = time.time()
         print('All download task has been accomplished')
         print('Total task count: ' + str(cls.task_count) + ', ' + str(cls.fail_count) + ' failed!')
-        print('Total time cost: ' + str(math.floor(end_time - start_time))) 
+        print('Total time cost: ' + str(math.floor(end_time - start_time)) + 's') 
 
     @classmethod
     def search(cls, name):
@@ -161,6 +171,7 @@ class MusicSpy:
         if not os.path.exists('./Music'):
             os.mkdir('./Music')
         if os.path.exists(fullpath):
+            print(author + ' - ' + title + '  already exist, no need download again!')
             return
         try:
             response = requests.get(data['url'])
@@ -177,7 +188,7 @@ class MusicSpy:
             print(author + ' - ' + title + ' download failed!')
             cls.fail_count += 1
         end_time = time.time()
-        print(author + ' - ' + title + '  downloaded... spent time: ' + str(math.floor(end_time - start_time)))
+        print(author + ' - ' + title + '  downloaded... spent time: ' + str(math.floor(end_time - start_time)) + 's')
 
 
 
