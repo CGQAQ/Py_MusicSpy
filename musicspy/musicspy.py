@@ -192,12 +192,3 @@ class MusicSpy:
         end_time = time.time()
         print(author + ' - ' + title + '  downloaded... spent time: ' + str(math.floor(end_time - start_time)) + 's')
 
-
-
-def main():
-    ms = MusicSpy(['ho ho ho', 'hello'], True, True)
-    ms.run()
-
-
-if __name__ == '__main__':
-    main()
