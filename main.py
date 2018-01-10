@@ -1,4 +1,4 @@
-from musicspy.musicspy import MusicSpy
+from musicspy import MusicSpy
 
 def main():
     ms = MusicSpy(['ho ho ho', 'hello'], True, True)

@@ -7,7 +7,7 @@ setup(
     author = 'CG',
     author_email = 'm.jason.liu@outlook.com',
     url = 'https://github.com/CGQAQ/Py_MusicSpy',
-    download_url = 'https://github.com/peterldowns/lggr/tarball/v0.2.1',
+    download_url = 'https://github.com/CGQAQ/Py_MusicSpy/releases/download/v1.0/musicspy-1.0.tar.gz',
     keywords = ['CG', 'Music', 'Crawler'],
     classifiers = [
         'Programming Language :: Python',
