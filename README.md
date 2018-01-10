@@ -6,3 +6,5 @@ author: _CG_
 
 To install this lib, just typing _"pip install musicspy"_ in terminal
 --
+**How to use**
+[Demo](https://github.com/CGQAQ/Py_MusicSpy/blob/master/main.py)
